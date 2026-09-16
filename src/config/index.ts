@@ -4,9 +4,7 @@ type ServerConfig = {
   PORT: number;
 };
 
-export function loadEnv() {
-  dotenv.config();
-}
+dotenv.config();
 
 export const serverConfig: ServerConfig = {
   PORT: Number(process.env.PORT) || 3000,
