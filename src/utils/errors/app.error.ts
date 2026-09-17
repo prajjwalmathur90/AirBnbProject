@@ -1,51 +1,30 @@
-export interface AppError extends Error {
-  statusCode: number;
-}
+export class AppError extends Error {
+  readonly statusCode: number;
+  readonly details?: unknown;
 
-export class notFound implements AppError {
-  statusCode: number;
-  message: string;
-  name: string;
-
-  constructor(message: string) {
-    this.statusCode = 404;
-    this.message = message;
-    this.name = "NotFound!";
+  constructor(statusCode: number, message: string, details?: unknown) {
+    super(message);
+    this.statusCode = statusCode;
+    this.details = details;
+    this.name = "AppError";
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
-export class badRequest implements AppError {
-  statusCode: number;
-  message: string;
-  name: string;
+export const badRequest = (message: string, details?: unknown) =>
+  new AppError(400, message, details);
 
-  constructor(message: string) {
-    this.statusCode = 400;
-    this.message = message;
-    this.name = "BadRequest!";
-  }
-}
+export const unauthorized = (message: string, details?: unknown) =>
+  new AppError(401, message, details);
 
-export class internalServerError implements AppError {
-  statusCode: number;
-  message: string;
-  name: string;
+export const forbidden = (message: string, details?: unknown) =>
+  new AppError(403, message, details);
 
-  constructor(message: string) {
-    this.statusCode = 500;
-    this.message = message;
-    this.name = "InternalServerError!";
-  }
-}
+export const notFound = (message: string, details?: unknown) =>
+  new AppError(404, message, details);
 
-export class conflictError implements AppError {
-  statusCode: number;
-  message: string;
-  name: string;
+export const conflict = (message: string, details?: unknown) =>
+  new AppError(409, message, details);
 
-  constructor(message: string) {
-    this.statusCode = 409;
-    this.message = message;
-    this.name = "ConflictError!";
-  }
-}
+export const internalServerError = (message = "Internal Server Error") =>
+  new AppError(500, message);

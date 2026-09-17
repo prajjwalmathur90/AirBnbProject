@@ -7,8 +7,18 @@ export function genericErrorHandler(
   res: Response,
   _next: NextFunction,
 ) {
-  res.status(err.statusCode).json({
+  const body: Record<string, unknown> = {
     success: false,
     message: err.message,
-  });
+  };
+
+  if (err.details) {
+    body.details = err.details;
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    body.details = err.stack;
+  }
+
+  res.status(err.statusCode).json(body);
 }

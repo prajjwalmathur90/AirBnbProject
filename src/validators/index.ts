@@ -8,7 +8,7 @@ export const validateRequestBody = (schema: ZodObject) => {
       await schema.parseAsync(req.body);
       next();
     } catch (error) {
-      throw new badRequest("Bad Request!");
+      throw badRequest("Bad Request!");
     }
   };
 };
