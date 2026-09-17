@@ -17,7 +17,7 @@ export function genericErrorHandler(
   }
 
   if (process.env.NODE_ENV === "development") {
-    body.details = err.stack;
+    body.stack = err.stack;
   }
 
   res.status(err.statusCode).json(body);
