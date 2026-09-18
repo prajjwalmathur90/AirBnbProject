@@ -11,3 +11,18 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+
+model Hotel {
+  id Int @id @default(autoincrement())
+  name String
+  address String
+  location String
+  description String?
+  rating Int?
+  ratingCount Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("hotel")
+}

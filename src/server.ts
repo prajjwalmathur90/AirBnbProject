@@ -3,8 +3,8 @@ import { serverConfig } from "./config/index.js";
 import v1Router from "./router/v1/index.router.js";
 import { genericErrorHandler } from "./middleware/error.middleware.js";
 import { routeNotFound } from "./middleware/route-not-found.js";
-import logger from "./config/logger.config.js";
 import { attachCorrelationId } from "./middleware/correlation.middleware.js";
+import { connectDB } from "./config/prisma.js";
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use("/api/v1", v1Router);
 app.use(routeNotFound);
 app.use(genericErrorHandler);
 
-app.listen(serverConfig.PORT, () => {
+app.listen(serverConfig.PORT, async () => {
+  await connectDB();
   console.log(`Server is running on port ${serverConfig.PORT}`);
 });
