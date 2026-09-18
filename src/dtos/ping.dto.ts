@@ -1,7 +1,7 @@
-import z from "zod/v3";
+import z from "zod";
 
 export const pingValidateSchema = z.object({
   message: z.string().default("ok"),
 });
 
-export type PingValidateSchema = z.infer<typeof pingValidateSchema>;
+export type PingValidateDTO = z.infer<typeof pingValidateSchema>;
