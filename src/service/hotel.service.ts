@@ -5,6 +5,7 @@ import {
   getHotelById,
   updateHotelById,
 } from "../repository/hotel.repository.js";
+import { notFound } from "../utils/errors/app.error.js";
 
 export async function createHotelService(hotelData: CreateHotelDto) {
   return await createHotel(hotelData);
@@ -18,9 +19,20 @@ export async function updateHotelService(
   id: number,
   hotelData: UpdateHotelDto,
 ) {
+  const hotel = await getHotelById(id);
+
+  if (!hotel) {
+    throw notFound("Hotel not found!");
+  }
+
   return await updateHotelById(id, hotelData);
 }
 
 export async function deleteHotelService(id: number) {
+  const hotel = await getHotelById(id);
+
+  if (!hotel) {
+    throw notFound("Hotel not found!");
+  }
   return await deleteHotelById(id);
 }
