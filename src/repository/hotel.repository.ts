@@ -45,7 +45,6 @@ export async function getAllHotels() {
   return hotels;
 }
 
-
 export async function softDeleteHotel(id: number) {
   const hotel = await getHotelById(id);
 

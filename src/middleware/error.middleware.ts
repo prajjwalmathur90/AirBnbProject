@@ -16,9 +16,9 @@ export function genericErrorHandler(
     body.details = err.details;
   }
 
-  // if (process.env.NODE_ENV === "development") {
-  //   body.stack = err.stack;
-  // }
+  if (process.env.NODE_ENV === "development") {
+    body.stack = err.stack;
+  }
 
   res.status(err.statusCode || 500).json(body);
 }
