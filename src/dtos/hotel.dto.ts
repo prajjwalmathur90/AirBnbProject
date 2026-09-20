@@ -11,6 +11,3 @@ export const createHotelSchema = z.object({
 
 export type CreateHotelDto = z.infer<typeof createHotelSchema>;
 
-export const updateHotelSchema = createHotelSchema.partial();
-
-export type UpdateHotelDto = z.infer<typeof updateHotelSchema>;

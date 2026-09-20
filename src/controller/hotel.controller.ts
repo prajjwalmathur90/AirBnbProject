@@ -4,7 +4,6 @@ import {
   deleteHotelService,
   getAllHotelsService,
   getHotelByIdService,
-  updateHotelService,
 } from "../service/hotel.service.js";
 import { sendSuccess } from "../utils/responses/app.response.js";
 
@@ -21,12 +20,6 @@ export async function getHotelByIdController(req: Request, res: Response) {
 export async function getAllHotelsController(_req: Request, res: Response) {
   const hotelResponse = await getAllHotelsService();
   sendSuccess(res, hotelResponse, 200, "Hotels Found Successfully");
-}
-
-export async function updateHotelController(req: Request, res: Response) {
-  const id = Number(req.params.id);
-  const hotelResponse = await updateHotelService(id, req.body);
-  sendSuccess(res, hotelResponse, 200, "Hotel Updated Successfully");
 }
 
 export async function deleteHotelController(req: Request, res: Response) {

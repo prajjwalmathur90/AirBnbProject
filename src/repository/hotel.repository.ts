@@ -1,6 +1,6 @@
 import logger from "../config/logger.config.js";
 import prisma from "../config/prisma.js";
-import { CreateHotelDto, UpdateHotelDto } from "../dtos/hotel.dto.js";
+import { CreateHotelDto } from "../dtos/hotel.dto.js";
 import { notFound } from "../utils/errors/app.error.js";
 
 export async function createHotel(hotelData: CreateHotelDto) {
@@ -45,18 +45,6 @@ export async function getAllHotels() {
   return hotels;
 }
 
-export async function updateHotelById(id: number, hotelData: UpdateHotelDto) {
-  const hotel = await prisma.hotel.update({
-    where: {
-      id,
-    },
-    data: hotelData,
-  });
-
-  logger.info(`Hotel updated: ${hotel.id}`);
-
-  return hotel;
-}
 
 export async function softDeleteHotel(id: number) {
   const hotel = await getHotelById(id);
