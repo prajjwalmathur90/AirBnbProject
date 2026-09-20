@@ -21,6 +21,7 @@ model Hotel {
   description String?
   rating Int?
   ratingCount Int?
+  deletedAt DateTime? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

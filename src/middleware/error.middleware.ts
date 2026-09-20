@@ -20,5 +20,5 @@ export function genericErrorHandler(
   //   body.stack = err.stack;
   // }
 
-  res.status(err.statusCode).json(body);
+  res.status(err.statusCode || 500).json(body);
 }

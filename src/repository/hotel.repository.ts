@@ -29,6 +29,22 @@ export async function getHotelById(id: number) {
   return hotel;
 }
 
+export async function getAllHotels() {
+  const hotels = await prisma.hotel.findMany({
+    where: {
+      deletedAt: null,
+    },
+  });
+
+  if (!hotels) {
+    throw notFound("No hotel found");
+  }
+
+  logger.info("Hotels found");
+
+  return hotels;
+}
+
 export async function updateHotelById(id: number, hotelData: UpdateHotelDto) {
   const hotel = await prisma.hotel.update({
     where: {
@@ -42,14 +58,23 @@ export async function updateHotelById(id: number, hotelData: UpdateHotelDto) {
   return hotel;
 }
 
-export async function deleteHotelById(id: number) {
-  const hotel = await prisma.hotel.delete({
+export async function softDeleteHotel(id: number) {
+  const hotel = await getHotelById(id);
+
+  if (!hotel) {
+    throw notFound("Hotel not found");
+  }
+
+  const deletedHotel = await prisma.hotel.update({
     where: {
       id,
     },
+    data: {
+      deletedAt: new Date(),
+    },
   });
 
-  logger.info(`Hotel deleted: ${hotel.id}`);
+  logger.info(`Hotel soft deleted: ${deletedHotel.id}`);
 
-  return hotel;
+  return deletedHotel;
 }

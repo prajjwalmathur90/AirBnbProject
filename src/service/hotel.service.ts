@@ -1,7 +1,8 @@
 import { CreateHotelDto, UpdateHotelDto } from "../dtos/hotel.dto.js";
 import {
   createHotel,
-  deleteHotelById,
+  softDeleteHotel,
+  getAllHotels,
   getHotelById,
   updateHotelById,
 } from "../repository/hotel.repository.js";
@@ -13,6 +14,10 @@ export async function createHotelService(hotelData: CreateHotelDto) {
 
 export async function getHotelByIdService(id: number) {
   return await getHotelById(id);
+}
+
+export async function getAllHotelsService() {
+  return await getAllHotels();
 }
 
 export async function updateHotelService(
@@ -29,10 +34,5 @@ export async function updateHotelService(
 }
 
 export async function deleteHotelService(id: number) {
-  const hotel = await getHotelById(id);
-
-  if (!hotel) {
-    throw notFound("Hotel not found!");
-  }
-  return await deleteHotelById(id);
+  return await softDeleteHotel(id);
 }
