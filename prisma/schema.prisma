@@ -25,5 +25,49 @@ model Hotel {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  rooms Room[]
+  roomCategory RoomCategory[]
+
   @@map("hotel")
+}
+
+model Room {
+  id                  Int @id @default(autoincrement())
+  hotelId             Int
+  roomCategoryId      Int
+  dateOfAvailability  DateTime
+  price               Int
+  roomType            RoomType
+  roomCount           Int
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  deletedAt           DateTime? 
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomCategory RoomCategory @relation(fields: [roomCategoryId], references: [id], onDelete: Cascade)
+
+  @@map("rooms")
+}
+
+model RoomCategory {
+  id         Int @id @default(autoincrement())
+  hotelId    Int
+  price      Int
+  roomType   RoomType
+  roomCount  Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  deletedAt  DateTime? 
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  rooms Room[]
+  @@map("room_categories")
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  FAMILY
+  DELUXE
+  SUITE
 }
